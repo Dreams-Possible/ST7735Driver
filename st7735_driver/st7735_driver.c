@@ -24,7 +24,7 @@ static void send_cmd(uint8_t cmd);
 //send data
 static void send_data(uint8_t data);
 //send color
-static void send_color(uint16_t*data,uint32_t len);
+static void send_color(uint16_t*data,uint32_t length);
 //init gpio
 static void init_gpio();
 //init spi
@@ -65,19 +65,19 @@ static void send_data(uint8_t data)
 }
 
 //send color
-static void send_color(uint16_t*data,uint32_t len)
+static void send_color(uint16_t*data,uint32_t length)
 {
     io(DC,1);
-    if(data==NULL||len==0)
+    if(data==NULL||length==0)
     {
         return;
     }
-    while(len)
+    while(length)
     {
         //spi_send((uint8_t)(*data>>8));
         //spi_send((uint8_t)*data);
         ++data;
-        --len;
+        --length;
     }
     return;
 }
@@ -301,8 +301,8 @@ void st7735_flash(int16_t x1,int16_t y1,int16_t x2,int16_t y2,uint16_t*color)
     send_data(data);
     //color
     send_cmd(0x2c);
-    uint32_t len=(x2-x1+1)*(y2-y1+1);
-    send_color(color,len);
+    uint32_t length=(x2-x1+1)*(y2-y1+1);
+    send_color(color,length);
 }
 
 #endif//#ifdef ST7735_DRIVER_H
