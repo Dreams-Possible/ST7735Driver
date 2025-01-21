@@ -3,7 +3,6 @@
 #ifdef ST7735_DRIVER_H
 
 //config
-#define CS 15
 #define DC 32
 #define RST 33//no use as -1
 #define LED 16//no use as -1
