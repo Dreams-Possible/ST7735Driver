@@ -6,7 +6,6 @@
 //include
 #include<stdio.h>
 #include<stdint.h>
-#include"st7735_config.h"
 
 //st7735 init all
 void st7735_init();

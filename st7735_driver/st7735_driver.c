@@ -3,16 +3,51 @@
 #ifdef ST7735_DRIVER_H
 
 //config
-#define DC 32
-#define RST 33//no use as -1
-#define LED 16//no use as -1
+#define DC 21
+#define RST 47
+#define LED 14
 #define HOR 160//horizontal pixel
 #define HOR_OFF 1//horizontal pixel offset
-#define VER 80//vertical pixel
+#define VER 160//vertical pixel
 #define VER_OFF 26//vertical pixel offset
-#define DIR 3//rotation direction
+#define DIR 0//rotation direction
 #define BRG 1//use bgr:0rgb,1bgr
 #define INV 1//use inv:0disable,1enable
+
+//example config for specific oem landscape screen
+// //config
+// #define DC 21
+// #define RST 47
+// #define LED 14
+// #define HOR 160//horizontal pixel
+// #define HOR_OFF 0//horizontal pixel offset
+// #define VER 160//vertical pixel
+// #define VER_OFF 0//vertical pixel offset
+// #define DIR 0//rotation direction
+// #define BRG 1//use bgr:0rgb,1bgr
+// #define INV 0//use inv:0disable,1enable
+
+//example config for specific oem vertical screen
+// //config
+// #define DC 21
+// #define RST 47
+// #define LED 14
+// #define HOR 160//horizontal pixel
+// #define HOR_OFF 0//horizontal pixel offset
+// #define VER 160//vertical pixel
+// #define VER_OFF 0//vertical pixel offset
+// #define DIR 2//rotation direction
+// #define BRG 1//use bgr:0rgb,1bgr
+// #define INV 0//use inv:0disable,1enable
+
+//define
+#define SWRESET 0x01
+#define SLPOUT 0x11
+#define INVON 0x21
+#define INVOFF 0x20
+#define COLMOD 0x3a
+#define MADCTL 0x36
+#define DISPON 0x29
 
 //io set
 static void io(uint16_t pin,uint8_t level);
@@ -122,57 +157,20 @@ static void init_soft()
     }
     delay(200);
     //send init code
-    send_cmd(ST7735_SWRESET);
-    send_data(0x00);
+    send_cmd(SWRESET);
     delay(200);
-    send_cmd(ST7735_SLPOUT);
-    send_data(0x00);
-    delay(400);
-    send_cmd(ST7735_FRMCTR1);
-    send_data(0x01);
-    send_data(0x2c);
-    send_data(0x2d);
-    send_cmd(ST7735_FRMCTR2);
-    send_data(0x01);
-    send_data(0x2c);
-    send_data(0x2d);
-    send_cmd(ST7735_FRMCTR3);
-    send_data(0x01);
-    send_data(0x2c);
-    send_data(0x2d);
-    send_data(0x01);
-    send_data(0x2c);
-    send_data(0x2d);
-    send_cmd(ST7735_INVCTR);
-    send_data(0x07);
-    send_cmd(ST7735_PWCTR1);
-    send_data(0xa2);
-    send_data(0x02);
-    send_data(0x84);
-    send_cmd(ST7735_PWCTR2);
-    send_data(0xc5);
-    send_cmd(ST7735_PWCTR3);
-    send_data(0x0a);
-    send_data(0x00);
-    send_cmd(ST7735_PWCTR4);
-    send_data(0x8a);
-    send_data(0x2a);
-    send_cmd(ST7735_PWCTR5);
-    send_data(0x8a);
-    send_data(0xee);
-    send_cmd(ST7735_VMCTR1);
-    send_data(0x0e);
+    send_cmd(SLPOUT);
+    delay(200);
     if(INV)
     {
-        send_cmd(ST7735_INVON);
+        send_cmd(INVON);
     }else
     {
-        send_cmd(ST7735_INVOFF);
+        send_cmd(INVOFF);
     }
-    send_data(0x00);
-    send_cmd(ST7735_COLMOD);
-    send_data(0x05);
-    send_cmd(ST7735_MADCTL);
+    send_cmd(COLMOD);
+    send_data(0x55);
+    send_cmd(MADCTL);
     uint8_t bgr=0;
     if(BRG)
     {
@@ -181,60 +179,22 @@ static void init_soft()
     switch(DIR)
     {
         case 0:
-            send_data(0xc0|bgr);
+            send_data(0x80|bgr);
         break;
         case 1:
-            send_data(0x00|bgr);
+            send_data(0x40|bgr);
         break;
         case 2:
-            send_data(0xa0|bgr);
+            send_data(0xe0|bgr);
         break;
         case 3:
-            send_data(0x60|bgr);
+            send_data(0x20|bgr);
         break;
         default:
-            send_data(0x60|bgr);
+            send_data(0x80|bgr);
         break;
     }
-    send_cmd(ST7735_GMCTRP1);
-    send_data(0x02);
-    send_data(0x1c);
-    send_data(0x07);
-    send_data(0x12);
-    send_data(0x37);
-    send_data(0x32);
-    send_data(0x29);
-    send_data(0x2d);
-    send_data(0x29);
-    send_data(0x25);
-    send_data(0x2b);
-    send_data(0x39);
-    send_data(0x00);
-    send_data(0x01);
-    send_data(0x03);
-    send_data(0x10);
-    send_cmd(ST7735_GMCTRN1);
-    send_data(0x03);
-    send_data(0x1d);
-    send_data(0x07);
-    send_data(0x06);
-    send_data(0x2e);
-    send_data(0x2c);
-    send_data(0x29);
-    send_data(0x2d);
-    send_data(0x2e);
-    send_data(0x2e);
-    send_data(0x37);
-    send_data(0x3f);
-    send_data(0x00);
-    send_data(0x00);
-    send_data(0x02);
-    send_data(0x10);
-    send_cmd(ST7735_NORON);
-    send_data(0x00);
-    delay(200);
-    send_cmd(ST7735_DISPON);
-    send_data(0x00);
+    send_cmd(DISPON);
     delay(200);
     //enable backlight
     if(LED!=-1)
