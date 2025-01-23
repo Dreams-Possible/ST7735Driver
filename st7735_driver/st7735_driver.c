@@ -8,37 +8,37 @@
 #define LED 14
 #define HOR 160//horizontal pixel
 #define HOR_OFF 1//horizontal pixel offset
-#define VER 160//vertical pixel
+#define VER 80//vertical pixel
 #define VER_OFF 26//vertical pixel offset
-#define DIR 0//rotation direction
+#define DIR 3//rotation direction
 #define BRG 1//use bgr:0rgb,1bgr
 #define INV 1//use inv:0disable,1enable
 
 //example config for specific oem landscape screen
 // //config
-// #define DC 21
-// #define RST 47
-// #define LED 14
-// #define HOR 160//horizontal pixel
-// #define HOR_OFF 0//horizontal pixel offset
+// #define DC 15
+// #define RST 21
+// #define LED 47
+// #define HOR 80//horizontal pixel
+// #define HOR_OFF 26//horizontal pixel offset
 // #define VER 160//vertical pixel
-// #define VER_OFF 0//vertical pixel offset
-// #define DIR 0//rotation direction
+// #define VER_OFF 1//vertical pixel offset
+// #define DIR 1//rotation direction
 // #define BRG 1//use bgr:0rgb,1bgr
-// #define INV 0//use inv:0disable,1enable
+// #define INV 1//use inv:0disable,1enable
 
 //example config for specific oem vertical screen
 // //config
-// #define DC 21
-// #define RST 47
-// #define LED 14
+// #define DC 15
+// #define RST 21
+// #define LED 47
 // #define HOR 160//horizontal pixel
-// #define HOR_OFF 0//horizontal pixel offset
-// #define VER 160//vertical pixel
-// #define VER_OFF 0//vertical pixel offset
-// #define DIR 2//rotation direction
+// #define HOR_OFF 1//horizontal pixel offset
+// #define VER 80//vertical pixel
+// #define VER_OFF 26//vertical pixel offset
+// #define DIR 3//rotation direction
 // #define BRG 1//use bgr:0rgb,1bgr
-// #define INV 0//use inv:0disable,1enable
+// #define INV 1//use inv:0disable,1enable
 
 //define
 #define SWRESET 0x01
@@ -179,19 +179,19 @@ static void init_soft()
     switch(DIR)
     {
         case 0:
-            send_data(0x80|bgr);
+            send_data(0xc0|bgr);
         break;
         case 1:
-            send_data(0x40|bgr);
+            send_data(0x00|bgr);
         break;
         case 2:
-            send_data(0xe0|bgr);
+            send_data(0xa0|bgr);
         break;
         case 3:
-            send_data(0x20|bgr);
+            send_data(0x60|bgr);
         break;
         default:
-            send_data(0x80|bgr);
+            send_data(0xc0|bgr);
         break;
     }
     send_cmd(DISPON);
