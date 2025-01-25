@@ -67,9 +67,9 @@ static void init_gpio();
 static void init_spi();
 //init software
 static void init_soft();
-//st7735 init all
+//st7735 init
 void st7735_init();
-//st7735 flash color
+//st7735 flash
 void st7735_flash(int16_t x1,int16_t y1,int16_t x2,int16_t y2,uint16_t*color);
 
 //io set
@@ -239,7 +239,7 @@ static void init_soft()
     }
 }
 
-//st7735 init all
+//st7735 init
 void st7735_init()
 {
     init_gpio();
@@ -248,7 +248,7 @@ void st7735_init()
     return;
 }
 
-//st7735 flash color
+//st7735 flash
 void st7735_flash(int16_t x1,int16_t y1,int16_t x2,int16_t y2,uint16_t*color)
 {
     //check

@@ -7,9 +7,9 @@
 #include<stdio.h>
 #include<stdint.h>
 
-//st7735 init all
+//st7735 init
 void st7735_init();
-//st7735 flash color
+//st7735 flash
 void st7735_flash(int16_t x1,int16_t y1,int16_t x2,int16_t y2,uint16_t*color);
 
 #endif//#ifndef ST7735_DRIVER_H
